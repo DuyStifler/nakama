@@ -171,3 +171,7 @@ To build the codebase and generate all sources follow these steps.
 ### License
 
 This project is licensed under the [Apache-2 License](https://github.com/heroiclabs/nakama/blob/master/LICENSE).
+
+### Duy modify
+1. add module into package module
+2. run/build: go run main.go --database.address username:password@ip:port/db    ---- env GOOS=linux GOARCH=amd64 go build

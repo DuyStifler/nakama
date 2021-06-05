@@ -181,6 +181,9 @@ github.com/philhofer/fwd
 github.com/pkg/errors
 # github.com/pmezard/go-difflib v1.0.0
 github.com/pmezard/go-difflib/difflib
+# github.com/rs/xid v1.3.0
+## explicit
+github.com/rs/xid
 # github.com/rubenv/sql-migrate v0.0.0-20210408115534-a32ed26c37ea
 ## explicit
 github.com/rubenv/sql-migrate

@@ -2419,6 +2419,11 @@ func NewRuntimeProviderGo(logger, startupLogger *zap.Logger, db *sql.DB, protojs
 		modulePaths = append(modulePaths, relPath)
 	}
 
+	err := doInitModule(ctx, runtimeLogger, db, nk, initializer)
+	if err != nil {
+		panic(err)
+	}
+
 	startupLogger.Info("Go runtime modules loaded")
 
 	events := &RuntimeEventFunctions{}

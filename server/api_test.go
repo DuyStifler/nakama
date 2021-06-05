@@ -15,7 +15,6 @@
 package server
 
 import (
-	"bytes"
 	"context"
 	"database/sql"
 	"encoding/base64"
@@ -40,13 +39,9 @@ var (
 	logger             = NewConsoleLogger(os.Stdout, true)
 	cfg                = NewConfig(logger)
 	protojsonMarshaler = &protojson.MarshalOptions{
-		EnumsAsInts:  true,
-		EmitDefaults: false,
 		Indent:       "",
-		OrigName:     true,
 	}
 	protojsonUnmarshaler = &protojson.UnmarshalOptions{
-		AllowUnknownFields: false,
 	}
 	metrics = NewMetrics(logger, logger, cfg)
 	_       = CheckConfig(logger, cfg)
@@ -104,7 +99,7 @@ func (d *DummySession) Send(envelope *rtapi.Envelope, reliable bool) error {
 }
 func (d *DummySession) SendBytes(payload []byte, reliable bool) error {
 	envelope := &rtapi.Envelope{}
-	protojsonUnmarshaler.Unmarshal(bytes.NewReader(payload), envelope)
+	//protojsonUnmarshaler.Unmarshal(bytes.NewReader(payload), envelope)
 	d.messages = append(d.messages, envelope)
 	return nil
 }
@@ -155,10 +150,8 @@ func GenerateString() string {
 }
 
 func InsertUser(t *testing.T, db *sql.DB, uid uuid.UUID) {
-	if _, err := db.Exec(`
-INSERT INTO users (id, username)
-VALUES ($1, $2)
-ON CONFLICT(id) DO NOTHING`, uid, uid.String()); err != nil {
+	var query string = "INSERT INTO users (id, username) VALUES ($1, $2) ON CONFLICT(id) DO NOTHING"
+	if _, err := db.Exec(query, uid, uid.String()); err != nil {
 		t.Fatal("Could not insert new user.", err)
 	}
 }
